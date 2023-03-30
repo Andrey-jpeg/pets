@@ -1,0 +1,12 @@
+[package]
+name = "pets-api"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+tide = "0.14.0"
+serde = { version = "1.0", features = ["derive"] }
+sea-orm = { version = "^0", features = [ "sqlx-mysql", "runtime-tokio-native-tls" ] }
