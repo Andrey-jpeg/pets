@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db:
-    image: mysql:5.7
+    image: mysql:8
     restart: always
     environment:
       MYSQL_DATABASE: 'db'
@@ -13,7 +13,6 @@ services:
     expose:
       - '3306'
     volumes:
-      - my-db:/var/lib/mysql
-      - "./db/init.sql:/docker-entrypoint-initdb.d/1.sql"
+      - ./db/:/docker-entrypoint-initdb.d/
 volumes:
   my-db:
