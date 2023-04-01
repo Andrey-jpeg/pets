@@ -31,20 +31,29 @@ async fn main() -> tide::Result<()> {
 
     app.at("/pet/:id").get(get_pet);
     
-
     app.listen("0.0.0.0:8080").await?;
 
     Ok(())
 }
 
 async fn get_pet(req: Request<State>) -> tide::Result<> {
-    let mut res = Response::new(tide::StatusCode::Ok);
-
+    let mut res = Response::new(tide::StatusCode::InternalServerError);
     let id = req.param("id")?;
-    let my_int :i32 = id.parse::<i32>().unwrap();
+    let my_int= id.parse::<i32>();
 
-    let pet = Pets::find_by_id(my_int).one(&req.state().db).await?;
-    res.set_body(pet.unwrap().pet_name);
-    
+    if my_int.is_ok(){
+        let pet = Pets::find_by_id(my_int.unwrap()).one(&req.state().db).await?;
+
+        if pet.is_some() {
+            res.set_body(pet.unwrap().pet_name);
+            res.set_status(tide::StatusCode::Ok);
+        } else {
+            res.set_status(tide::StatusCode::NotFound);
+        }
+        
+    } else {
+        res.set_body(my_int.unwrap_err().to_string());
+    }
+
     Ok(res)
 }
