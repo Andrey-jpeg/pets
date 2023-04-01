@@ -3,24 +3,16 @@
 use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "PetsByOwners")]
+#[sea_orm(table_name = "UserPets")]
 pub struct Model {
-    #[sea_orm(column_name = "PetID", primary_key)]
+    #[sea_orm(column_name = "PetID", primary_key, auto_increment = false)]
     pub pet_id: i32,
-    #[sea_orm(column_name = "PersonID", primary_key)]
-    pub person_id: i32,
+    #[sea_orm(column_name = "UserID", primary_key, auto_increment = false)]
+    pub user_id: i32,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {
-    #[sea_orm(
-        belongs_to = "super::owners::Entity",
-        from = "Column::PersonId",
-        to = "super::owners::Column::PersonId",
-        on_update = "NoAction",
-        on_delete = "NoAction"
-    )]
-    Owners,
     #[sea_orm(
         belongs_to = "super::pets::Entity",
         from = "Column::PetId",
@@ -29,17 +21,25 @@ pub enum Relation {
         on_delete = "NoAction"
     )]
     Pets,
-}
-
-impl Related<super::owners::Entity> for Entity {
-    fn to() -> RelationDef {
-        Relation::Owners.def()
-    }
+    #[sea_orm(
+        belongs_to = "super::users::Entity",
+        from = "Column::UserId",
+        to = "super::users::Column::UserId",
+        on_update = "NoAction",
+        on_delete = "NoAction"
+    )]
+    Users,
 }
 
 impl Related<super::pets::Entity> for Entity {
     fn to() -> RelationDef {
         Relation::Pets.def()
+    }
+}
+
+impl Related<super::users::Entity> for Entity {
+    fn to() -> RelationDef {
+        Relation::Users.def()
     }
 }
 

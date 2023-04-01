@@ -3,28 +3,32 @@
 use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "Owners")]
+#[sea_orm(table_name = "Users")]
 pub struct Model {
-    #[sea_orm(column_name = "PersonID", primary_key, auto_increment = false)]
-    pub person_id: i32,
+    #[sea_orm(column_name = "UserID", primary_key, auto_increment = false)]
+    pub user_id: i32,
     #[sea_orm(column_name = "FirstName")]
     pub first_name: String,
     #[sea_orm(column_name = "LastName")]
     pub last_name: String,
+    #[sea_orm(column_name = "Username", unique)]
+    pub username: String,
+    #[sea_orm(column_name = "Password")]
+    pub password: String,
     #[sea_orm(column_name = "PhoneNumber")]
     pub phone_number: Option<String>,
     pub email: Option<String>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
-pub enum Relation {
-    #[sea_orm(has_many = "super::pets_by_owners::Entity")]
-    PetsByOwners,
-}
+pub enum Relation {}
 
-impl Related<super::pets_by_owners::Entity> for Entity {
+impl Related<super::pets::Entity> for Entity {
     fn to() -> RelationDef {
-        Relation::PetsByOwners.def()
+        super::user_pets::Relation::Pets.def()
+    }
+    fn via() -> Option<RelationDef> {
+        Some(super::user_pets::Relation::Users.def().rev())
     }
 }
 

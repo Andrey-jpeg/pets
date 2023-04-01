@@ -19,8 +19,6 @@ pub struct Model {
 pub enum Relation {
     #[sea_orm(has_many = "super::pet_location::Entity")]
     PetLocation,
-    #[sea_orm(has_many = "super::pets_by_owners::Entity")]
-    PetsByOwners,
 }
 
 impl Related<super::pet_location::Entity> for Entity {
@@ -29,9 +27,12 @@ impl Related<super::pet_location::Entity> for Entity {
     }
 }
 
-impl Related<super::pets_by_owners::Entity> for Entity {
+impl Related<super::users::Entity> for Entity {
     fn to() -> RelationDef {
-        Relation::PetsByOwners.def()
+        super::user_pets::Relation::Users.def()
+    }
+    fn via() -> Option<RelationDef> {
+        Some(super::user_pets::Relation::Pets.def().rev())
     }
 }
 

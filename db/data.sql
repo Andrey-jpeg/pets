@@ -4,30 +4,35 @@ CREATE TABLE Pets (
     Color varchar(255),
     Status varchar(2555)
 );
-CREATE TABLE Owners (
-    PersonID int PRIMARY KEY NOT NULL,
+CREATE TABLE Users (
+    UserID int PRIMARY KEY NOT NULL,
     FirstName varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
+    Username varchar(255) NOT NULL UNIQUE,
+    Password varchar(255) NOT NULL,
     PhoneNumber varchar(20),
     email varchar(255)
 );
-CREATE TABLE PetsByOwners (
+CREATE TABLE UserPets (
 	PetID INT,
-    PersonID INT,
+    UserID INT,
     FOREIGN KEY (PetID) REFERENCES Pets(PetID),
-    FOREIGN KEY (PersonID) REFERENCES Owners(PersonID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    PRIMARY KEY(PetID, UserID)
 );
 CREATE TABLE PetLocation (
     PetID INT,
     Latitude float not null,
     Longitude float not null,
+    PRIMARY KEY (PetID),
     FOREIGN KEY (PetID) REFERENCES Pets(PetID)
 );
+
 INSERT INTO Pets(PetID, PetName, Color, Status)
 VALUES (1, "Cookie", "Sort og hvid", "Active");
 
-INSERT INTO Owners(PersonID, FirstName, LastName)
-VALUES (1, "Hans", "Hansen");
+INSERT INTO Users(UserID, FirstName, LastName, Username, Password)
+VALUES (1, "Hans", "Hansen", "H4N5", "5N4H");
 
-INSERT INTO PetsByOwners(PetID, PersonID)
+INSERT INTO UserPets(PetID, UserID)
 VALUES (1, 1);

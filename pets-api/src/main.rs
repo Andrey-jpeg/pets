@@ -13,7 +13,6 @@ struct State {
     db: DatabaseConnection,
 }
 
-
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     dotenv().ok();
@@ -37,22 +36,20 @@ async fn main() -> tide::Result<()> {
 }
 
 async fn get_pet(req: Request<State>) -> tide::Result<> {
-    let mut res = Response::new(tide::StatusCode::InternalServerError);
+    let mut res = Response::new(400);
     let id = req.param("id")?;
     let my_int= id.parse::<i32>();
 
     if my_int.is_ok(){
         let pet = Pets::find_by_id(my_int.unwrap()).one(&req.state().db).await?;
-
         if pet.is_some() {
             res.set_body(pet.unwrap().pet_name);
             res.set_status(tide::StatusCode::Ok);
         } else {
             res.set_status(tide::StatusCode::NotFound);
         }
-        
     } else {
-        res.set_body(my_int.unwrap_err().to_string());
+        res.set_body( "Found '".to_string() + id + "', expected a number");
     }
 
     Ok(res)

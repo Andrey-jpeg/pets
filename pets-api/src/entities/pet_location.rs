@@ -5,11 +5,11 @@ use sea_orm::entity::prelude::*;
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel)]
 #[sea_orm(table_name = "PetLocation")]
 pub struct Model {
-    #[sea_orm(column_name = "PetID",primary_key)]
+    #[sea_orm(column_name = "PetID", primary_key, auto_increment = false)]
     pub pet_id: i32,
-    #[sea_orm(column_name = "Latitude", column_type = "Float",primary_key)]
+    #[sea_orm(column_name = "Latitude", column_type = "Float")]
     pub latitude: f32,
-    #[sea_orm(column_name = "Longitude", column_type = "Float",primary_key)]
+    #[sea_orm(column_name = "Longitude", column_type = "Float")]
     pub longitude: f32,
 }
 
