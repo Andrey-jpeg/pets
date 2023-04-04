@@ -1,11 +1,11 @@
 CREATE TABLE Pets (
-    PetID int PRIMARY KEY NOT NULL,
+    PetID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     PetName varchar(255) NOT NULL,
     Color varchar(255),
     Status varchar(2555)
 );
 CREATE TABLE Users (
-    UserID int PRIMARY KEY NOT NULL,
+    UserID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     FirstName varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
     Username varchar(255) NOT NULL UNIQUE,
@@ -28,11 +28,11 @@ CREATE TABLE PetLocation (
     FOREIGN KEY (PetID) REFERENCES Pets(PetID)
 );
 
-INSERT INTO Pets(PetID, PetName, Color, Status)
-VALUES (1, "Cookie", "Sort og hvid", "Active");
+INSERT INTO Pets(PetName, Color, Status)
+VALUES ("Cookie", "Sort og hvid", "Active");
 
 INSERT INTO Users(UserID, FirstName, LastName, Username, Password)
-VALUES (1, "Hans", "Hansen", "H4N5", "5N4H");
+VALUES ("Hans", "Hansen", "H4N5", "5N4H");
 
 INSERT INTO UserPets(PetID, UserID)
 VALUES (1, 1);
