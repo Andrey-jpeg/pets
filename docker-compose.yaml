@@ -9,11 +9,11 @@ services:
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
+      - '33060:33060'
       - '3306:3306'
-    expose:
-      - '3306'
     volumes:
       - ./db/:/docker-entrypoint-initdb.d/
+      
   pets-api:
     image: pets-api:latest
     environment:

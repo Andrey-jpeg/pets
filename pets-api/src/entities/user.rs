@@ -3,10 +3,10 @@
 use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "Users")]
+#[sea_orm(table_name = "User")]
 pub struct Model {
-    #[sea_orm(column_name = "UserID", primary_key, auto_increment = false)]
-    pub user_id: i32,
+    #[sea_orm(primary_key)]
+    pub id: i32,
     #[sea_orm(column_name = "FirstName")]
     pub first_name: String,
     #[sea_orm(column_name = "LastName")]
@@ -23,12 +23,12 @@ pub struct Model {
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {}
 
-impl Related<super::pets::Entity> for Entity {
+impl Related<super::cat::Entity> for Entity {
     fn to() -> RelationDef {
-        super::user_pets::Relation::Pets.def()
+        super::user_pet::Relation::Cat.def()
     }
     fn via() -> Option<RelationDef> {
-        Some(super::user_pets::Relation::Users.def().rev())
+        Some(super::user_pet::Relation::User.def().rev())
     }
 }
 

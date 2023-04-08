@@ -2,7 +2,7 @@
 
 pub mod prelude;
 
+pub mod cat;
 pub mod pet_location;
-pub mod pets;
-pub mod user_pets;
-pub mod users;
+pub mod user;
+pub mod user_pet;

@@ -1,1 +1,1 @@
-pub mod pet_controller;
+pub mod cat_controller;

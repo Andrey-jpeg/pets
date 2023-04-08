@@ -1,11 +1,11 @@
-CREATE TABLE Pets (
-    PetID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS Cat (
+    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     PetName varchar(255) NOT NULL,
     Color varchar(255),
     Status varchar(2555)
 );
-CREATE TABLE Users (
-    UserID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS User (
+    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     FirstName varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
     Username varchar(255) NOT NULL UNIQUE,
@@ -13,26 +13,26 @@ CREATE TABLE Users (
     PhoneNumber varchar(20),
     email varchar(255)
 );
-CREATE TABLE UserPets (
-	PetID INT,
+CREATE TABLE IF NOT EXISTS UserPet (
+	CatID INT,
     UserID INT,
-    FOREIGN KEY (PetID) REFERENCES Pets(PetID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    PRIMARY KEY(PetID, UserID)
+    FOREIGN KEY (CatID) REFERENCES Cat(id),
+    FOREIGN KEY (UserID) REFERENCES User(id),
+    PRIMARY KEY(CatID, UserID)
 );
-CREATE TABLE PetLocation (
-    PetID INT,
+CREATE TABLE IF NOT EXISTS PetLocation (
+    CatID INT,
     Latitude float not null,
     Longitude float not null,
-    PRIMARY KEY (PetID),
-    FOREIGN KEY (PetID) REFERENCES Pets(PetID)
+    PRIMARY KEY (CatID),
+    FOREIGN KEY (CatID) REFERENCES Cat(id)
 );
 
-INSERT INTO Pets(PetName, Color, Status)
+INSERT INTO Cat(PetName, Color, Status)
 VALUES ("Cookie", "Sort og hvid", "Active");
 
-INSERT INTO Users(UserID, FirstName, LastName, Username, Password)
+INSERT INTO User(FirstName, LastName, Username, Password)
 VALUES ("Hans", "Hansen", "H4N5", "5N4H");
 
-INSERT INTO UserPets(PetID, UserID)
+INSERT INTO UserPet(CatID, UserID)
 VALUES (1, 1);

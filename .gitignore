@@ -2,3 +2,5 @@
 .DS_STORE
 *.lock
 .env
+.vscode
+/.vscode/*

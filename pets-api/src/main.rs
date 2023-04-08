@@ -24,9 +24,12 @@ async fn main() -> tide::Result<()> {
 
     let state = State { db };
     femme::start();
+
     let mut app = tide::with_state(state);
-    app.at("/pet/:id").get(pet::pet_controller::read);
-    app.at("/pet/:id").delete(pet::pet_controller::delete);
+    app.at("/pet/:id").get(pet::cat_controller::read);
+    app.at("/pet/:id").put(pet::cat_controller::update);
+    app.at("/pet/:id").delete(pet::cat_controller::delete);
+    app.at("/pet").post(pet::cat_controller::create);
     app.listen("0.0.0.0:8080").await?;
 
     Ok(())
